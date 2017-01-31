@@ -39,6 +39,6 @@
     dest=/etc/dd-agent/checks.d/{{ item.name }}.py
     owner={{ datadog_user }}
     group={{ datadog_group }}
-  with_items: '{{ datadog_check_agents.keys() }}'
+  with_items: '{{ datadog_check_agents }}'
   notify:
    - restart datadog-agent
