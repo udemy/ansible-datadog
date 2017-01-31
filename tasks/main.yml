@@ -13,3 +13,32 @@
 
 - include: agent6.yml
   when: not datadog_agent5
+
+- debug: 'msg="[DEPRECATION NOTICE] Using `datadog_process_checks` is deprecated, use `process` under `datadog_checks` instead"'
+  when: datadog_process_checks is defined
+
+- service: name=datadog-agent state=started enabled=yes
+  when: datadog_enabled
+
+- service: name=datadog-agent state=stopped enabled=no
+  when: not datadog_enabled
+
+- name: Create a configuration file for each Datadog check
+  template:
+    src=checks.yaml.j2
+    dest=/etc/dd-agent/conf.d/{{ item }}.yaml
+    owner={{ datadog_user }}
+    group={{ datadog_group }}
+  with_items: '{{ datadog_checks.keys() }}'
+  notify:
+   - restart datadog-agent
+
+- name: Create a check agent for each Datadog check
+  copy:
+    src={{ item.src }}/{{ item.name }}
+    dest=/etc/dd-agent/checks.d/{{ item.name }}
+    owner={{ datadog_user }}
+    group={{ datadog_group }}
+  with_items: '{{ datadog_check_agents.keys() }}'
+  notify:
+   - restart datadog-agent
