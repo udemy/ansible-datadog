@@ -8,7 +8,3 @@
 - name: Install datadog-agent package
   yum: name=datadog-agent state=latest enablerepo=datadog
   notify: restart datadog-agent
-
-- name: Configure datadog-agent
-  template: src=datadog.conf.j2 dest=/etc/dd-agent/datadog.conf
-  notify: restart datadog-agent
