@@ -19,5 +19,5 @@
 
 {# logformat is a bit fiddly, it's presence as a setting changes the format dramatically #}
 {% if data_dog_stream_response_time %}
-dogstreams: /www/logs/www.udemy.com/access_log_nginx:/etc/dd-agent/checks.d/parse-nginx-access-log.py:parselog
+  dogstreams: /www/logs/www.udemy.com/access_log_nginx:/etc/dd-agent/checks.d/parse-nginx-access-log.py:parselog
 {% endif %}
