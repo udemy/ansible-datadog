@@ -6,7 +6,7 @@
   yum: name=dd-trace-agent state=removed
 
 - name: Install datadog-agent package
-  yum: name=datadog-agent state=latest enablerepo=datadog
+  yum: name={{ datadog_agent_version }} state=present enablerepo=datadog
   notify: restart datadog-agent
 
 - name: Configure datadog-agent
