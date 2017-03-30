@@ -17,6 +17,8 @@ datadog_group: root
 # default apt repo
 datadog_apt_repo: "deb http://apt.datadoghq.com/ stable main"
 
+datadog_agent_version: datadog-agent-5.11.2-1
+
 datadog_mysql_host: localhost
 datadog_mysql_user: datadog
 datadog_mysql_password: ThisNeedsToBeChangedViaVault
