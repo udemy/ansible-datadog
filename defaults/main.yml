@@ -15,7 +15,6 @@ datadog_user: dd-agent
 datadog_group: root
 
 # default apt repo
-<<<<<<< HEAD
 datadog_apt_repo: "deb https://apt.datadoghq.com/ stable 6"
 datadog_apt_cache_valid_time: 3600
 datadog_apt_key_retries: 5
@@ -31,7 +30,7 @@ datadog_zypper_gpgkey: "https://yum.datadoghq.com/DATADOG_RPM_KEY.public"
 datadog_zypper_gpgkey_sha256sum: "00d6505c33fd95b56e54e7d91ad9bfb22d2af17e5480db25cba8fee500c80c46"
 
 # Pin agent to a version. Highly recommended.
-datadog_agent_version: "datadog-agent-5.10.1-1"
+datadog_agent_version: "datadog-agent-5.11.2-1"
 
 # Avoid checking if the agent is running or not. This can be useful if you're
 # using sysvinit and providing your own init script.
@@ -61,11 +60,6 @@ datadog_agent5_zypper_repo: "https://yum.datadoghq.com/suse/rpm/{{ ansible_users
 
 ###           End of Beta-Agent6-only experimental attributes        ###
 ########################################################################
-=======
-datadog_apt_repo: "deb http://apt.datadoghq.com/ stable main"
-
-datadog_agent_version: datadog-agent-5.11.2-1
->>>>>>> Hardcoding the datadog-agent version as a precaution
 
 datadog_mysql_host: localhost
 datadog_mysql_user: datadog
