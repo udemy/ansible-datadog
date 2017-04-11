@@ -26,3 +26,4 @@ datadog_mysql_replication_enabled: True
 datadog_mysql_extra_status_enabled: True
 datadog_mysql_extra_innodb_enabled: True
 datadog_mysql_extra_performance_enabled: True
+data_dog_stream_response_time: False
