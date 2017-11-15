@@ -23,7 +23,11 @@
   when: datadog_process_checks is defined
 
 - name: Ensure datadog-agent is running
-  service: name=datadog-agent state=started enabled=yes
+  service:
+    name: datadog-agent
+    state: started
+    enabled: yes
+    use: "{{ (ansible_service_mgr == "systemd") | ternary("system", omit) }}"
   when: datadog_enabled
 
 - name: Ensure datadog-agent is not running
