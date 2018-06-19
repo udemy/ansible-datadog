@@ -47,8 +47,8 @@
   copy:
     src: "{{ item }}.py"
     dest: "/etc/dd-agent/checks.d/{{ item }}.py"
-    owner: {{ datadog_user }}
-    group: {{ datadog_group }}
+    owner: "{{ datadog_user }}"
+    group: "{{ datadog_group }}"
   with_items: "{{ datadog_check_agents }}"
   notify:
    - restart datadog-agent
@@ -56,7 +56,7 @@
 - name: Upgrade snakebite version
   pip:
     name: snakebite
-    version: {{ datadog_snakebite_version }}
+    version: "{{ datadog_snakebite_version }}"
     executable: /opt/datadog-agent/embedded/bin/pip
     state: present
   when: hadoop_server_monitoring is defined and hadoop_server_monitoring
@@ -76,7 +76,7 @@
 
 - name: Adding datadog system user to "{{ item }}" group
   user:
-    name: {{ datadog_user }}
+    name: "{{ datadog_user }}"
     groups: "{{ item }}"
     append: yes
   with_items: "{{ datadog_groups }}"
