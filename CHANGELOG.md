@@ -1,9 +1,52 @@
 CHANGELOG
 =========
 
+# 2.4.0 / 2018-10-25
+
+* [FEATURE] Add support for "site" configuration.
+* [IMPROVEMENT] Add retry policy when failing to pull GPG key from keyserver.ubuntu.com
+
+# 2.3.1 / 2018-08-24
+
+* [FIX] Disabling repo metadata signature check for SUSE/SLES.
+
+# 2.3.0 / 2018-07-23
+
+* [FEATURE] Add support for SUSE/SLES (thanks to [@enarciso][]).
+
+# 2.2.0 / 2018-06-06
+
+* [DEPRECATION] Drop support for EOL platform
+* [IMPROVEMENT] Harmonize tasks names between agent5 and agent6 (thanks [@xp-1000][]).
+
+# 2.1.0 / 2018-05-14
+
+* [FEATURE] Support "--check" Ansible option for dry-run.
+* [BUGFIX] Fix downgrade on centos.
+* [IMPROVEMENT] Update conf paths to respect agent6 best practice (thanks [@dbr1993][]).
+* [IMPROVEMENT] Fix YAML cosmetics: standardize syntax everywhere (thanks [@tomgoren][]).
+* [DEPRECATION] Drop support for EOL versions of ansible (<2.2).
+
+# 2.0.3 / 2018-04-13
+
+* [BUGFIX] Removing legacy http apt repos pre-dating usage of HTTPS. See [#116][]
+
+# 2.0.2 / 2018-03-27
+
+* [BUGFIX] Remove empty brackets from datadog.yaml when datadog_config is empty. See [#107][]
+
+# 2.0.1 / 2018-03-05
+
+* [BUGFIX] Remove failing import of expired APT key. See [#105][]
+
 # 1.6.1 / 2018-03-05
 
 * [BUGFIX] Remove failing import of expired APT key. See [#105][]
+
+# 2.0.0 / 2018-02-27
+
+* [RELEASE] Make Agent6 the default version to install.
+* [IMPROVEMENT] Defaulting to HTTPS for apt and yum repo.
 
 # 1.6.0 / 2018-01-19
 
@@ -67,3 +110,7 @@ Initial release, compatible with Ansible v1 & v2
 [@gtrummell]: https://github.com/gtrummell
 [@jeffwidman]: https://github.com/jeffwidman
 [@pmbauer]: https://github.com/pmbauer
+[@tomgoren]: https://github.com/tomgoren
+[@dbr1993]: https://github.com/dbr1993
+[xp-1000]: https://github.com/xp-1000
+[enarciso]: https://github.com/enarciso
