@@ -23,26 +23,6 @@
 - service: name=datadog-agent state=stopped enabled=no
   when: not datadog_enabled
 
-- name: Create a configuration file for each Datadog check
-  template:
-    src=checks.yaml.j2
-    dest=/etc/dd-agent/conf.d/{{ item }}.yaml
-    owner={{ datadog_user }}
-    group={{ datadog_group }}
-  with_items: '{{ datadog_checks.keys() }}'
-  notify:
-   - restart datadog-agent
-
-- name: Create a check agent for each Datadog check
-  copy:
-    src: "{{ item }}.py"
-    dest: "/etc/dd-agent/checks.d/{{ item }}.py"
-    owner: "{{ datadog_user }}"
-    group: "{{ datadog_group }}"
-  with_items: "{{ datadog_check_agents }}"
-  notify:
-   - restart datadog-agent
-
 - name: Upgrade snakebite version
   pip:
     name: snakebite
