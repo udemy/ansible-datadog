@@ -24,8 +24,14 @@
 {% if datadog_config_ex is defined -%}
 {% for section, keyvals in datadog_config_ex | dictsort %}
 [{{ section }}]
+{% if keyvals is mapping -%}
 {% for key, value in keyvals | dictsort -%}
 {{ key }}: {{ value }}
 {% endfor -%}
+{% elif keyvals is iterable -%}
+{% for item in keyvals | sort -%}
+- {{ item }}
+{% endfor -%}
+{% endif %}
 {% endfor %}
 {% endif %}
