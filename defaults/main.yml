@@ -33,7 +33,7 @@ datadog_zypper_gpgkey: "https://yum.datadoghq.com/DATADOG_RPM_KEY.public"
 datadog_zypper_gpgkey_sha256sum: "00d6505c33fd95b56e54e7d91ad9bfb22d2af17e5480db25cba8fee500c80c46"
 
 # Pin agent to a version. Highly recommended.
-datadog_agent_version: "datadog-agent-5.11.2-1"
+datadog_agent_version: ""
 
 # Avoid checking if the agent is running or not. This can be useful if you're
 # using sysvinit and providing your own init script.
@@ -42,7 +42,7 @@ datadog_skip_running_check: false
 # Set this to `yes` to allow agent downgrades on apt-based platforms.
 # Internally, this uses `apt-get`'s `--force-yes` option. Use with caution.
 # On centos this will only work with ansible 2.4 and up
-datadog_agent_allow_downgrade: yes
+datadog_agent_allow_downgrade: no
 
 datadog_mysql_host: localhost
 datadog_mysql_user: datadog
@@ -57,7 +57,7 @@ datadog_mysql_extra_performance_enabled: True
 
 # To install agent5 instead of agent6 you need to:
 # * set 'datadog_agent5' to true
-datadog_agent5: true
+datadog_agent5: no
 
 # To downgrade from agent6 to agent5, you need to:
 # * set 'datadog_agent5' to true
