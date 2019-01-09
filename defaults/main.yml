@@ -44,6 +44,14 @@ datadog_skip_running_check: false
 # On centos this will only work with ansible 2.4 and up
 datadog_agent_allow_downgrade: no
 
+datadog_mysql_host: localhost
+datadog_mysql_user: datadog
+datadog_mysql_password: ThisNeedsToBeChangedViaVault
+datadog_mysql_replication_enabled: True
+datadog_mysql_extra_status_enabled: True
+datadog_mysql_extra_innodb_enabled: True
+datadog_mysql_extra_performance_enabled: True
+
 ########################################################################
 ###                       Installing agent5                          ###
 
