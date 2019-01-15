@@ -11,7 +11,10 @@ import pymysql
 import pymysql.cursors
 
 # project
-from checks import AgentCheck
+try:
+    from checks import AgentCheck
+except ImportError:
+    from datadog_checks.checks import AgentCheck
 
 GAUGE = "gauge"
 RATE = "rate"

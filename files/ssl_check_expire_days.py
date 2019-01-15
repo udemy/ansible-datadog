@@ -5,7 +5,11 @@ import time
 import datetime
 import subprocess
 import sys
-from checks import AgentCheck
+try:
+    from checks import AgentCheck
+except ImportError:
+    from datadog_checks.checks import AgentCheck
+
 
 class SSLCheckExpireDays(AgentCheck):
     def check(self, instance):

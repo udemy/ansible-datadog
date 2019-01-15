@@ -1,7 +1,11 @@
 #!/usr/bin/env/python
 
 import re
-from checks import AgentCheck
+try:
+    from checks import AgentCheck
+except ImportError:
+    from datadog_checks.checks import AgentCheck
+
 
 class mdCheck(AgentCheck):
     def check(self, instance):
