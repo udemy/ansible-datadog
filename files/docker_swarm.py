@@ -1,7 +1,10 @@
 import socket
 import docker
 
-from checks import AgentCheck
+try:
+    from checks import AgentCheck
+except ImportError:
+    from datadog_checks.checks import AgentCheck
 
 
 class DockerSwarm(AgentCheck):

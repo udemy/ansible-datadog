@@ -17,7 +17,10 @@ import sys
 import time
 import uuid
 
-from checks import AgentCheck
+try:
+    from checks import AgentCheck
+except ImportError:
+    from datadog_checks.checks import AgentCheck
 
 
 class NutcrackerCheck(AgentCheck):

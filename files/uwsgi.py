@@ -16,7 +16,10 @@ import socket
 from stat import ST_CTIME
 import time
 
-from checks import AgentCheck
+try:
+    from checks import AgentCheck
+except ImportError:
+    from datadog_checks.checks import AgentCheck
 
 
 class UwsgiCheck(AgentCheck):
