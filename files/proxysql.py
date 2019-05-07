@@ -100,7 +100,7 @@ class ProxySQL(AgentCheck):
         for proxysql_metric_name, metric_details in PROXYSQL_MYSQL_STATS_GLOBAL.iteritems():
             metric_name, metric_type = metric_details
             metric_tags = list(tags)
-            self._submit_metric(metric_name, metric_type, int(global_stats.get(proxysql_metric_name)), metric_tags)
+            self._push_metric(metric_type, metric_name, int(global_stats.get(proxysql_metric_name)), metric_tags)
 
         report_command_counters = options.get('extra_command_counter_metrics', True)
         if report_command_counters:
@@ -108,21 +108,22 @@ class ProxySQL(AgentCheck):
             for proxysql_metric_name, metric_details in PROXYSQL_MYSQL_STATS_COMMAND_COUNTERS.iteritems():
                 metric_name, metric_type = metric_details
                 metric_tags = list(tags)
-                self._submit_metric(metric_name, metric_type,
-                                    int(command_counters.get(proxysql_metric_name)), metric_tags)
+                self._push_metric(metric_type, metric_name,
+                                  int(command_counters.get(proxysql_metric_name)), metric_tags)
 
         report_conn_pool_stats = options.get('extra_connection_pool_metrics', True)
         if report_conn_pool_stats:
             conn_pool_stats = self._get_connection_pool_stats(conn)
-            for proxysql_metric_name, metric_details in PROXYSQL_CONNECTION_POOL_STATS.iteritems():
-                metric_name, metric_type = metric_details
+            if conn_pool_stats is not None:
+                for proxysql_metric_name, metric_details in PROXYSQL_CONNECTION_POOL_STATS.iteritems():
+                    metric_name, metric_type = metric_details
 
-                for metric in conn_pool_stats.get(proxysql_metric_name):
-                    metric_tags = list(tags)
-                    tag, value = metric
-                    if tag:
-                        metric_tags.append(tag)
-                    self._submit_metric(metric_name, metric_type, int(value), metric_tags)
+                    for metric in conn_pool_stats.get(proxysql_metric_name):
+                        metric_tags = list(tags)
+                        tag, value = metric
+                        if tag:
+                            metric_tags.append(tag)
+                        self._push_metric(metric_type, metric_name, int(value), metric_tags)
 
     def _get_global_stats(self, conn):
         """Fetch the global ProxySQL stats."""
@@ -263,7 +264,7 @@ class ProxySQL(AgentCheck):
             if db:
                 db.close()
 
-    def _submit_metric(self, metric_name, metric_type, metric_value, metric_tags):
+    def _push_metric(self, metric_type, metric_name, metric_value, metric_tags):
         if metric_value is None:
             return
 
