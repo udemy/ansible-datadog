@@ -26,6 +26,7 @@
     dest: "/etc/datadog-agent/conf.d/{{ item }}.d/conf.yaml"
     owner: "{{ datadog_user }}"
     group: "{{ datadog_group }}"
+    mode: 0640
   with_items: "{{ datadog_checks|list }}"
   notify: restart datadog-agent
 
