@@ -1,27 +1,17 @@
 ---
-- include: pkg-debian.yml
-  when: ansible_os_family == "Debian"
+- name: Include Gather Ansible Facts task on Ansible >= 2.10
+  include_tasks: facts-ansible10.yml
+  when: ansible_version.major >= 2 and ansible_version.minor >= 10
 
-- include: pkg-redhat.yml
-  when: ansible_os_family == "RedHat"
+- name: Include Gather Ansible Facts task on Ansible < 2.10
+  include_tasks: facts-ansible9.yml
+  when: ansible_version.major == 2 and ansible_version.minor < 10
 
-- include: pkg-suse.yml
-  when: ansible_os_family == "Suse"
+- name: Check if OS is supported
+  include_tasks: os-check.yml
 
-- include: agent5.yml
-  when: datadog_agent5
-
-- include: agent6.yml
-  when: not datadog_agent5
-
-- debug: 'msg="[DEPRECATION NOTICE] Using `datadog_process_checks` is deprecated, use `process` under `datadog_checks` instead"'
-  when: datadog_process_checks is defined
-
-- service: name=datadog-agent state=started enabled=yes
-  when: datadog_enabled
-
-- service: name=datadog-agent state=stopped enabled=no
-  when: not datadog_enabled
+- name: Set Facts for Datadog Agent Major Version
+  include_tasks: set-parse-version.yml
 
 - name: Upgrade snakebite version
   pip:
@@ -44,3 +34,34 @@
     groups: "{{ item }}"
     append: yes
   with_items: "{{ datadog_groups }}"
+- name: Debian Install Tasks
+  include_tasks: pkg-debian.yml
+  when: ansible_facts.os_family == "Debian"
+
+- name: RedHat Install Tasks
+  include_tasks: pkg-redhat.yml
+  when: ansible_facts.os_family == "RedHat"
+
+- name: Suse Install Tasks
+  include_tasks: pkg-suse.yml
+  when: ansible_facts.os_family == "Suse"
+
+- name: Windows Install Tasks
+  include_tasks: pkg-windows.yml
+  when: ansible_facts.os_family == "Windows"
+
+- name: Linux Configuration Tasks (Agent 5)
+  include_tasks: agent5-linux.yml
+  when: datadog_agent_major_version | int == 5 and ansible_facts.os_family != "Windows"
+
+- name: Linux Configuration Tasks
+  include_tasks: agent-linux.yml
+  when: datadog_agent_major_version | int > 5 and ansible_facts.os_family != "Windows"
+
+- name: Windows Configuration Tasks
+  include_tasks: agent-win.yml
+  when: datadog_agent_major_version | int > 5 and ansible_facts.os_family == "Windows"
+
+- name: Integrations Tasks
+  include_tasks: integration.yml
+  when: datadog_integration is defined
